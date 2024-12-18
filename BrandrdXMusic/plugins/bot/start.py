@@ -23,7 +23,7 @@ from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
-import asyncio
+
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
@@ -35,8 +35,6 @@ async def start_pm(client, message: Message, _):
         if name[0:4] == "help":
             keyboard = help_pannel(_)
             await message.reply_sticker("CAACAgIAAxkBAAKQbmdi2aFFZlHG1VSDgfrrLrQ2UjyuAAIhAgACygMGC3TKTtAdk_rFNgQ")
-await asyncio.sleep(5)  # 5 second wait korbe
-await message.delete()  # Message delete kore dibe
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
