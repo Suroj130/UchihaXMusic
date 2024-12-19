@@ -36,15 +36,12 @@ async def start_pm(client, message: Message, _):
 
             import asyncio  # Import asyncio for delay
 
-# Send the sticker first
 sticker_message = await message.reply_sticker(
     "CAACAgQAAxkBAAEQ245JjYcpjUzNlnqZayXwYGXQdQUYgAC2Q8AAnsbSFJTlxo-p_AUAAEzBA"
 )
 
-# Wait for 5 seconds
 await asyncio.sleep(5)
 
-# Delete the sticker message
 await sticker_message.delete()
             return await message.reply_photo(
                 photo=config.START_IMG_URL,
