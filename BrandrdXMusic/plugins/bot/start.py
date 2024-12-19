@@ -26,41 +26,17 @@ from strings import get_string
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
-"import" asyncio
-
-async def start_command(message, _):
-    # Add user to served user list
+async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-
-    # React to the message
-    await message.react("❤️")
-
-    # Check if a name exists in the command
-    if message.text and len(message.text.split()) > 1:
+    await message.react("❤")
+    if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
-
-        # Check if the command starts with "help"
-        if name.startswith("help"):
+        if name[0:4] == "help":
             keyboard = help_pannel(_)
-
-    # Send a sticker message
-    sticker_message = await message.reply_sticker(
-        "CAACAgQAAxkBAAEQ245JjYcpjUzNlnqZayXwYGXQdQUYgAC2Q8AAnsbSFJTIxo-p_AUAAEzBA"
-    )
-
-    # Wait for 5 seconds
-    await asyncio.sleep(5)
-
-    # Delete the sticker message
-    if sticker_message:
-        await sticker_message.delete()
-
-    # Finally, reply with a photo and help text
-    return await message.reply_photo(
-        photo=config.START_IMG_URL,
-        caption=_["help_1"],
-    )
-format(config.SUPPORT_CHAT),
+            await message.reply_sticker("CAACAgQAAxkBAAEQ245ljYcpjiUzNlnqZayXwYGXQdQUYgAC2Q8AAnsbSFJTlxo-p_AUAAEzBA")
+            return await message.reply_photo(
+                photo=config.START_IMG_URL,
+                caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
         if name[0:3] == "sud":
