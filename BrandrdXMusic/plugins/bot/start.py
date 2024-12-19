@@ -26,6 +26,7 @@ from strings import get_string
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
+
 import asyncio
 
 async def start_command(message, _):
