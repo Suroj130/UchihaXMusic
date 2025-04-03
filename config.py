@@ -89,10 +89,10 @@ confirmer = {}
 
 
 START_IMG_URL = getenv(
-    "START_IMG_URL", "https://i.ibb.co/KxP5gmn8/photo-2025-03-29-17-50-29-7487290601625354244.jpg"
+    "START_IMG_URL", "https://files.catbox.moe/g9nm7c.jpg"
 )
 PING_IMG_URL = getenv(
-    "PING_IMG_URL", "https://i.ibb.co/KxP5gmn8/photo-2025-03-29-17-50-29-7487290601625354244.jpg"
+    "PING_IMG_URL", "https://files.catbox.moe/bfjeim.jpg"
 )
 PLAYLIST_IMG_URL = "https://te.legra.ph/file/14eb59ea7d31229d8d751.jpg"
 STATS_IMG_URL = "https://te.legra.ph/file/4310ea5f523520b2b765b.jpg"
