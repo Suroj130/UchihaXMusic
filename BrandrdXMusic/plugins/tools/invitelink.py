@@ -5,7 +5,7 @@ from pyrogram.errors import ChatAdminRequired, ChatNotModified, ChatIdInvalid, F
 import os
 import json
 from pyrogram.types import Message
-from AnonXMusic.misc import SUDOERS
+from BrandrdXMusic.misc import SUDOERS
 
 
 
