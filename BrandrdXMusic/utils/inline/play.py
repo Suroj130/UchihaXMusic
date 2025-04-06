@@ -68,10 +68,10 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text="⛦ ᴏᴡɴᴇʀ ❥", url=f"https://t.me/SesioxD"
+                text="๏ ᴏᴡɴᴇʀ ๏", url=f"https://t.me/SesioxD"
             ),
             InlineKeyboardButton(
-                text="⛦ ᴄʜᴀᴛ ❥", url=f"https://t.me/Thunder_World_Chat"
+                text="๏ ᴄʜᴀᴛ ๏", url=f"https://t.me/Thunder_World_Chat"
             ),
         ],
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
@@ -90,10 +90,10 @@ def stream_markup(_, videoid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text=" ᴏᴡɴᴇʀ ❥", url=f"https://t.me/SesioxD"
+                text="๏ ᴏᴡɴᴇʀ ๏", url=f"https://t.me/SesioxD"
             ),
             InlineKeyboardButton(
-                text="⛦ ᴄʜᴀᴛ ❥", url=f"https://t.me/Thunder_World_Chat"
+                text="๏ ᴄʜᴀᴛ ๏", url=f"https://t.me/Thunder_World_Chat"
             ),
         ],
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
@@ -219,7 +219,7 @@ def queue_markup(_, videoid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="⛦ ᴍᴏʀᴇ ❥",
+                text="๏ ᴍᴏʀᴇ ๏",
                 callback_data=f"PanelMarkup None|{chat_id}",
             ),
         ],
@@ -245,10 +245,10 @@ def stream_markup2(_, chat_id):
         ],
 [
             InlineKeyboardButton(
-                text="⛦ ᴏᴡɴᴇʀ ❥", url=f"https://t.me/BRANDEDKING8"
+                text="๏ ᴏᴡɴᴇʀ ๏", url=f"https://t.me/SesioxD"
             ),
             InlineKeyboardButton(
-                text="⛦ ᴄʜᴀᴛ ❥", url=f"https://t.me/BRANDED_WORLD"
+                text="๏ ᴄʜᴀᴛ ๏", url=f""
             ),
         ],
 
