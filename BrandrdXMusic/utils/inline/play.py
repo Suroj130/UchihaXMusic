@@ -68,7 +68,7 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
         ],
         [
             InlineKeyboardButton(
-                text="⛦ ᴏᴡɴᴇʀ ❥", url=f"https://t.me/Trustedseller105"
+                text="⛦ ᴏᴡɴᴇʀ ❥", url=f"https://t.me/SesioxD"
             ),
             InlineKeyboardButton(
                 text="⛦ ᴄʜᴀᴛ ❥", url=f"https://t.me/Thunder_World_Chat"
@@ -90,7 +90,7 @@ def stream_markup(_, videoid, chat_id):
         ],
         [
             InlineKeyboardButton(
-                text="⛦ ᴏᴡɴᴇʀ ❥", url=f"https://t.me/Trustedseller105"
+                text=" ᴏᴡɴᴇʀ ❥", url=f"https://t.me/SesioxD"
             ),
             InlineKeyboardButton(
                 text="⛦ ᴄʜᴀᴛ ❥", url=f"https://t.me/Thunder_World_Chat"
