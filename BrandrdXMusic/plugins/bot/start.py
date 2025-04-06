@@ -1,14 +1,17 @@
 import time
-
+import random
 from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
 
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto
 import config
 from BrandrdXMusic import app
 from BrandrdXMusic.misc import _boot_
 from BrandrdXMusic.plugins.sudo.sudoers import sudoers_list
+from BrandrdXMusic.utils.database import get_served_chats, get_served_users, get_sudoers
+from BrandrdXMusic.utils import bot_sys_stats
 from BrandrdXMusic.utils.database import (
     add_served_chat,
     add_served_user,
@@ -23,19 +26,28 @@ from BrandrdXMusic.utils.inline import help_pannel, private_panel, start_panel
 from config import BANNED_USERS
 from strings import get_string
 
+#--------------------------
+
+NEXI_VID = [
+"https://telegra.ph/file/1a3c152717eb9d2e94dc2.mp4",
+"https://graph.org/file/ba7699c28dab379b518ca.mp4",
+"https://graph.org/file/83ebf52e8bbf138620de7.mp4",
+"https://graph.org/file/82fd67aa56eb1b299e08d.mp4",
+"https://graph.org/file/318eac81e3d4667edcb77.mp4",
+"https://graph.org/file/7c1aa59649fbf3ab422da.mp4",
+"https://graph.org/file/2a7f857f31b32766ac6fc.mp4",
+]
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
 @LanguageStart
 async def start_pm(client, message: Message, _):
     await add_served_user(message.from_user.id)
-    await message.react("")
     if len(message.text.split()) > 1:
         name = message.text.split(None, 1)[1]
         if name[0:4] == "help":
             keyboard = help_pannel(_)
-            await message.reply_sticker("CAACAgQAAxkBAAL0PmdkK3R9COS3ZonJeGhSL9DVIh7yAAI3EAACVPXgUUl5iN8_fBx1NgQ")
-            return await message.reply_photo(
-                photo=config.START_IMG_URL,
+            return await message.reply_video(
+                random.choice(NEXI_VID),
                 caption=_["help_1"].format(config.SUPPORT_CHAT),
                 reply_markup=keyboard,
             )
@@ -86,9 +98,8 @@ async def start_pm(client, message: Message, _):
                 )
     else:
         out = private_panel(_)
-        await message.reply_sticker("CAACAgUAAxkBAAEQI1hlTLog9AN9m9USFpWRCMlU8iMCVwACbQQAAjYSmFa-LfaOxMHalzME")
-        await message.reply_photo(
-            photo=config.START_IMG_URL,
+        await message.reply_video(
+            random.choice(NEXI_VID),
             caption=_["start_2"].format(message.from_user.mention, app.mention),
             reply_markup=InlineKeyboardMarkup(out),
         )
@@ -104,8 +115,8 @@ async def start_pm(client, message: Message, _):
 async def start_gp(client, message: Message, _):
     out = start_panel(_)
     uptime = int(time.time() - _boot_)
-    await message.reply_photo(
-        photo=config.START_IMG_URL,
+    await message.reply_video(
+        random.choice(NEXI_VID),
         caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
         reply_markup=InlineKeyboardMarkup(out),
     )
@@ -139,10 +150,10 @@ async def welcome(client, message: Message):
                     return await app.leave_chat(message.chat.id)
 
                 out = start_panel(_)
-                await message.reply_photo(
-                    photo=config.START_IMG_URL,
+                await message.reply_video(
+                    random.choice(NEXI_VID),
                     caption=_["start_3"].format(
-                        message.from_user.first_name,
+                        message.from_user.mention,
                         app.mention,
                         message.chat.title,
                         app.mention,
