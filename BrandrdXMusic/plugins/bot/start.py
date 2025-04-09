@@ -36,6 +36,7 @@ NEXI_VID = [
 "https://graph.org/file/318eac81e3d4667edcb77.mp4",
 "https://graph.org/file/7c1aa59649fbf3ab422da.mp4",
 "https://graph.org/file/2a7f857f31b32766ac6fc.mp4",
+"https://files.catbox.moe/ymlrd6.mp4",
 ]
 
 @app.on_message(filters.command(["start"]) & filters.private & ~BANNED_USERS)
