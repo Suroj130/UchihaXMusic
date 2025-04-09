@@ -117,3 +117,18 @@ async def mb_plugin_button(client, CallbackQuery):
         await CallbackQuery.edit_message_text(f"`something errors`",reply_markup=keyboard,parse_mode=enums.ParseMode.MARKDOWN)
     else:
         await CallbackQuery.edit_message_text(getattr(Helper, cb), reply_markup=keyboard)
+
+class Helper:
+    HELP_1 = "/shayari"
+    HELP_2 = "/stop"
+
+    HELP_Shayari = """
+<b>Shayari Features:</b>
+
+- ❤️ Love Shayari  
+- 💔 Sad Shayari  
+- 😂 Funny Shayari  
+- 🔥 Attitude Shayari  
+
+Use the buttons below to explore more!
+"""
