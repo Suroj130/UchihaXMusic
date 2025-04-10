@@ -71,7 +71,7 @@ def stream_markup_timer(_, vidid, chat_id, played, dur):
                 text="๏ ᴏᴡɴᴇʀ ๏", url=f"https://t.me/SesioxD"
             ),
             InlineKeyboardButton(
-                text="๏ ᴄʜᴀᴛ ๏", url=f"https://t.me/Thunder_World_Chat"
+                text="๏ Fʀɪᴇɴᴅ Cʜᴀᴛ ๏", url=f"https://t.me/FriendZone_Ever"
             ),
         ],
         [InlineKeyboardButton(text=_["CLOSE_BUTTON"], callback_data="close")],
