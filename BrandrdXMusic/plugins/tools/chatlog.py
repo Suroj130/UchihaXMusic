@@ -17,11 +17,10 @@ from BrandrdXMusic.utils.database import get_assistant
 
 
 photo = [
-    "https://te.legra.ph/file/758a5cf4598f061f25963.jpg",
-    "https://te.legra.ph/file/30a1dc870bd1a485e3567.jpg",
-    "https://te.legra.ph/file/d585beb2a6b3f553299d2.jpg",
-    "https://te.legra.ph/file/7df9e128dd261de2afd6b.jpg",
-    "https://te.legra.ph/file/f60ebb75ad6f2786efa4e.jpg",
+    "https://files.catbox.moe/kex4j4.jpg",
+    "https://files.catbox.moe/i8g4s0.jpg",
+    "https://files.catbox.moe/fgmy7i.jpg",
+    "https://files.catbox.moe/wddgr3.jpg",
 ]
 
 
