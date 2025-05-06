@@ -7,8 +7,8 @@ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFont
 from pyrogram import enums, filters
 from pyrogram.types import ChatMemberUpdated
 
-from SONALI import app
-from SONALI.utils.database import get_assistant
+from BrandrdXMusic import app
+from BrandrdXMusic.utils.database import get_assistant
 
 LOGGER = getLogger(__name__)
 
