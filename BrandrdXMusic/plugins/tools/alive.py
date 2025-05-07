@@ -18,7 +18,7 @@ async def start(client: Client, message: Message):
                 text=" 𝗢𝘄𝗻𝗲𝗿 ", url=f"https://t.me/SesioxD"
             ),
             InlineKeyboardButton(
-                text=" 𝗖𝗵𝗮𝘁 ", url=f"https://t.me/FriendZone_Ever"
+                text=" 𝗖𝗵𝗮𝘁 ", url=f"https://t.me/+LvxKq7Toh_cxZGJl"
             ),
         ],
                 [
