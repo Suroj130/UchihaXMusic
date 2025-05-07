@@ -4,37 +4,8 @@ from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboa
 from logging import getLogger
 from BrandrdXMusic.utils.database import get_assistant
 from PIL import Image, ImageDraw, ImageFont, ImageEnhance, ImageChops
-import os, random, asyncio
 
-LOGGER = getLogger(__name__)
-
-random_photo = [
-    "https://telegra.ph/file/1949480f01355b4e87d26.jpg",
-    "https://telegra.ph/file/3ef2cc0ad2bc548bafb30.jpg",
-    "https://telegra.ph/file/a7d663cd2de689b811729.jpg",
-    "https://telegra.ph/file/6f19dc23847f5b005e922.jpg",
-    "https://telegra.ph/file/2973150dd62fd27a3a6ba.jpg",
-]
-
-class WelDatabase:
-    def __init__(self):
-        self.data = {}
-
-    async def find_one(self, chat_id):
-        return chat_id in self.data
-
-    async def add_wlcm(self, chat_id):
-        self.data[chat_id] = {"state": "on"}
-
-    async def rm_wlcm(self, chat_id):
-        self.data.pop(chat_id, None)
-
-wlcm = WelDatabase()
-
-class temp:
-    MELCOW = {}
-
-def circle(pfp, size=(500, 500), brightness_factor=10):
+def circle(pfp, size=(500, 500), brightness_factor=1.3):
     pfp = pfp.resize(size).convert("RGBA")
     pfp = ImageEnhance.Brightness(pfp).enhance(brightness_factor)
     mask = Image.new("L", (pfp.size[0]*3, pfp.size[1]*3), 0)
@@ -50,12 +21,15 @@ def welcomepic(pic, user, chatname, id, uname, brightness_factor=1.3):
     pfp = Image.open(pic).convert("RGBA")
     pfp = circle(pfp, brightness_factor=brightness_factor).resize((635, 635))
     draw = ImageDraw.Draw(background)
-    font = ImageFont.truetype('BrandrdXMusic/assets/font.ttf', size=70)
+    font = ImageFont.truetype("BrandrdXMusic/assets/font.ttf", size=70)
     draw.text((2999, 450), f'ID: {id}', fill=(255, 255, 255), font=font)
     background.paste(pfp, (255, 323), pfp)
     path = f"downloads/welcome#{id}.png"
     background.save(path)
     return path
+
+# Example usage
+welcomepic("file-JF6s4pWSJHCcEvdYFbNCBx", user="User123", chatname="MyChat", id=12345, uname="user123")
 
 @app.on_message(filters.command("welcome") & ~filters.private)
 async def auto_state(_, message):
