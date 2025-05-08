@@ -1,7 +1,7 @@
 #andi mandi jo iske niche wala line change/remove kiya uski ... 🤣
 # Created By - @ProBotts || @ZeoXpro
 
-from USIC import app
+from BrandrdXMusic import app
 from pyrogram.errors import RPCError
 from pyrogram.types import ChatMemberUpdated, InlineKeyboardMarkup, InlineKeyboardButton
 from os import environ
@@ -19,7 +19,7 @@ from asyncio import sleep
 from pyrogram import filters, Client, enums
 from pyrogram.enums import ParseMode
 from logging import getLogger
-from ANNIEMUSIC.utils.jarvis_ban import admin_filter
+from BrandrdXMusic.utils.jarvis_ban import admin_filter
 from PIL import ImageDraw, Image, ImageFont, ImageChops
 from pyrogram import *
 from pyrogram.types import *
@@ -31,15 +31,15 @@ import os
 import re
 import asyncio
 import time
-from ANNIEMUSIC.utils.database import add_served_chat
+from BrandrdXMusic.utils.database import add_served_chat
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
-from ANNIEMUSIC.utils.database import get_assistant
+from BrandrdXMusic.utils.database import get_assistant
 import asyncio
-from ANNIEMUSIC.misc import SUDOERS
-from ANNIEMUSIC.mongo.afkdb import PROCESS
+from BrandrdXMusic.misc import SUDOERS
+from BrandrdXMusic.mongo.afkdb import PROCESS
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant
-from ANNIEMUSIC import app
+from BrandrdXMusic import app
 import asyncio
 import random
 from pyrogram import Client, filters
@@ -50,7 +50,7 @@ from pyrogram.errors import (
     UserAlreadyParticipant,
     UserNotParticipant,
 )
-from ANNIEMUSIC.utils.database import get_assistant, is_active_chat
+from BrandrdXMusic.utils.database import get_assistant, is_active_chat
 
 
 
