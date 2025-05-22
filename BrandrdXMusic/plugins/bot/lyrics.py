@@ -11,7 +11,7 @@ from BrandrdXMusic.utils.decorators.language import language
 
 from config import BANNED_USERS, lyrical
 
-api_key = "fcXGwudRZTE8zdMOYKNMoRGIWfBjca_4s5wF5keHeCTd68yURmceO4MGhAbyx-qp"
+api_key = "30DxNexGenBotsNg9Ell"
 y = lg.Genius(
     api_key,
     skip_non_songs=True,
