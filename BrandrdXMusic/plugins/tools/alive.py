@@ -23,7 +23,7 @@ async def start(client: Client, message: Message):
         ],
                 [
             InlineKeyboardButton(
-                text=" ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/Bots_Apdate"
+                text=" ᴄʜᴀɴɴᴇʟ", url=f"https://t.me/Bots_Networks"
             ),
                 ],
                 [
